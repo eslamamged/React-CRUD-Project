@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UserContext } from "./UserModules";
+import { FaUserEdit } from "react-icons/fa";
 const style = {
   position: "absolute",
   top: "50%",
@@ -58,7 +59,9 @@ export default function EditUser({ data }) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Edit User</Button>
+      <Button onClick={handleOpen}>
+        Edit User <FaUserEdit />
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

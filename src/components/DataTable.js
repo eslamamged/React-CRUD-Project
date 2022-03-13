@@ -7,6 +7,7 @@ import Showuser from "./Showuser";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { v4 as uuid } from "uuid";
 import { UserContext } from "./UserModules";
+import { FaTrashAlt, FaUserPlus } from "react-icons/fa";
 export default function DataTable() {
   const [modalShow, setModalShow] = useState(false);
   const { users, deleteuser } = useContext(UserContext);
@@ -32,7 +33,7 @@ export default function DataTable() {
           onClick={() => setModalShow(true)}
           style={{ margin: "10px" }}
         >
-          Add New User
+          Add New User <FaUserPlus />
         </Button>
         <AddUser show={modalShow} onHide={() => setModalShow(false)} />
       </div>
@@ -64,7 +65,7 @@ export default function DataTable() {
               </td>
               <td>
                 <Button onClick={(e) => deleteuser(e, user.id)}>
-                  Delete user
+                  Delete user <FaTrashAlt />
                 </Button>
               </td>
               <td>

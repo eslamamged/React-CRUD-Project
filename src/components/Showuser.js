@@ -6,6 +6,8 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FaEye } from "react-icons/fa";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -35,7 +37,9 @@ export default function Showuser({ data }) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Show User</Button>
+      <Button onClick={handleOpen}>
+        Show User <FaEye />
+      </Button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
