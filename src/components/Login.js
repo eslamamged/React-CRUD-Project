@@ -27,62 +27,6 @@ export default function Login() {
     setSuccess(true);
   };
   return (
-    // <>
-    //   {success ? (
-    //     <section>
-    //       <h1>You are logged in!</h1>
-    //       <br />
-    //       <p>
-    //         <a href="/">Go to Home</a>
-    //       </p>
-    //     </section>
-    //   ) : (
-    //     <section>
-    //       <p
-    //         ref={errRef}
-    //         className={errMsg ? "errmsg" : "offscreen"}
-    //         aria-live="assertive"
-    //       >
-    //         {errMsg}
-    //       </p>
-    //       <form onSubmit={handleSubmit}>
-    //         <div>
-    //           <label htmlFor="username">Username:</label>
-    //           <input
-    //             type="text"
-    //             id="username"
-    //             ref={userRef}
-    //             autoComplete="off"
-    //             onChange={(e) => setUser(e.target.value)}
-    //             value={user}
-    //             required
-    //           />
-    //         </div>
-    //         <div>
-    //           <label htmlFor="password">Password:</label>
-    //           <input
-    //             type="password"
-    //             id="password"
-    //             onChange={(e) => setPwd(e.target.value)}
-    //             value={pwd}
-    //             required
-    //           />
-    //         </div>
-    //         <button onClick={() => navigate("/", { replace: true })}>
-    //           LogIn
-    //         </button>
-    //       </form>
-    //       <p>
-    //         Need an Account?
-    //         <br />
-    //         <span className="line">
-    //           <a href="/register">sign Up</a>
-    //         </span>
-    //       </p>
-    //     </section>
-    //   )}
-    // </>
-    //////////////////////
     <section className="vh-100">
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">

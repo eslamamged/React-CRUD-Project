@@ -72,12 +72,12 @@ export default function Register() {
       });
       console.log(response);
       console.log(response?.data);
-      console.log(response?.accessToken);
       setSuccess(true);
       setName("");
       setPassword("");
       setPasswordConfirm("");
       setEmail("");
+      navigate("/login", { replace: true });
     } catch (err) {
       console.log(err);
       if (!err?.response) {
