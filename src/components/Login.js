@@ -1,14 +1,23 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./Register.css";
+
+const Email_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[0-9]).{8,24}$/;
+const LOGIN_URL = "http://localhost:5000/users/login";
 
 export default function Login() {
   const userRef = useRef();
   const errRef = useRef();
   const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
+  const [password, setPassword] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,15 +25,45 @@ export default function Login() {
   }, []);
 
   useEffect(() => {
+    setValidEmail(Email_REGEX.test(email));
+  }, [email]);
+
+  useEffect(() => {
+    setValidPwd(PWD_REGEX.test(password));
+  }, [password]);
+
+  useEffect(() => {
     setErrMsg("");
-  }, [email, pwd]);
+  }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, pwd);
-    setEmail("");
-    setPwd("");
-    setSuccess(true);
+    const v1 = Email_REGEX.test(email);
+    const v2 = PWD_REGEX.test(password);
+    if (!v1 || !v2) {
+      setErrMsg("Invalid Email or Password");
+      return;
+    }
+
+    try {
+      const response = await axios.post(LOGIN_URL, {
+        email,
+        password,
+      });
+      console.log(response);
+      console.log(response?.data);
+      setEmail("");
+      setPassword("");
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.log(err);
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else {
+        setErrMsg("Registration Failed");
+      }
+      errRef.current.focus();
+    }
   };
   return (
     <section className="vh-100">
@@ -52,6 +91,14 @@ export default function Login() {
               <div className="form-outline mb-4">
                 <label className="form-label" htmlFor="form3Example3">
                   Email address
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className={validEmail ? "valid" : "hide"}
+                  />
+                  <FontAwesomeIcon
+                    icon={faTimes}
+                    className={validEmail || !email ? "hide" : "invalid"}
+                  />
                 </label>
                 <input
                   className="form-control form-control-lg"
@@ -64,33 +111,45 @@ export default function Login() {
                   value={email}
                   required
                 />
+                <b className={validEmail || !email ? "hide" : "invalid"}>
+                  invalid email
+                </b>
               </div>
               <div className="form-outline mb-3">
                 <label className="form-label" htmlFor="form3Example4">
                   Password
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className={validPwd ? "valid" : "hide"}
+                  />
+                  <FontAwesomeIcon
+                    icon={faTimes}
+                    className={validPwd || !password ? "hide" : "invalid"}
+                  />
                 </label>
                 <input
                   className="form-control form-control-lg"
                   type="password"
                   id="password"
                   placeholder="Enter password"
-                  onChange={(e) => setPwd(e.target.value)}
-                  value={pwd}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                   required
                 />
+                <b className={validPwd || !password ? "hide" : "invalid"}>
+                  Password Must be at least 8 characters with lowercase letters
+                </b>
               </div>
               <div className="text-center text-lg-start mt-4 pt-2">
-                <button
-                  type="button"
+                <input
+                  type="submit"
                   className="btn btn-primary btn-lg"
                   style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}
-                  onClick={() => navigate("#", { replace: true })}
-                >
-                  Login
-                </button>
+                  disabled={!validEmail || !validPwd ? true : false}
+                />
                 <p className="small fw-bold mt-2 pt-1 mb-0">
-                  Don't have an account ? {""}
-                  <a href="/register" className="link-danger">
+                  not have an account ? {""}
+                  <a href="/" className="link-danger">
                     Register
                   </a>
                 </p>

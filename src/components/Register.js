@@ -10,7 +10,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Register.css";
 
-const Email_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const Email_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[0-9]).{8,24}$/;
 const Name_REGEX = /^[A-z][A-z]{2,23}$/;
 const REGISTER_URL = "http://localhost:5000/users/register";
@@ -27,7 +27,6 @@ export default function Register() {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [validMatch, setValidMatch] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,8 +60,6 @@ export default function Register() {
       return;
     }
 
-    // navigate("/login", { replace: true });
-
     try {
       const response = await axios.post(REGISTER_URL, {
         name,
@@ -72,7 +69,6 @@ export default function Register() {
       });
       console.log(response);
       console.log(response?.data);
-      setSuccess(true);
       setName("");
       setPassword("");
       setPasswordConfirm("");
